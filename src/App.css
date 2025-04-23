@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --info: 204 94% 94%;
+    --info-foreground: 199 89% 48%;
+
+    --success: 149 80% 90%;
+    --success-foreground: 160 84% 39%;
+
+    --warning: 48 96% 89%;
+    --warning-foreground: 25 95% 53%;
+
+    --error: 0 93% 94%;
+    --error-foreground: 0 84% 60%;
+
+    --ring: 240 5.9% 10%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark,
+  [data-kb-theme="dark"] {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --info: 204 94% 94%;
+    --info-foreground: 199 89% 48%;
+
+    --success: 149 80% 90%;
+    --success-foreground: 160 84% 39%;
+
+    --warning: 48 96% 89%;
+    --warning-foreground: 25 95% 53%;
+
+    --error: 0 93% 94%;
+    --error-foreground: 0 84% 60%;
+
+    --ring: 240 4.9% 83.9%;
+
+    --radius: 0.5rem;
+  }
+
+  [data-theme="yellow"] {
+    --background: 48 100% 93%;
+    --foreground: 48 10% 10%;
+    
+    --muted: 48 30% 92%;
+    --muted-foreground: 48 10% 40%;
+    
+    --popover: 48 100% 96%;
+    --popover-foreground: 48 10% 10%;
+    
+    --border: 48 30% 85%;
+    --input: 48 30% 85%;
+    
+    --card: 48 100% 96%;
+    --card-foreground: 48 10% 10%;
+    
+    --primary: 45 95% 48%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 48 30% 90%;
+    --secondary-foreground: 48 10% 15%;
+    
+    --accent: 48 50% 88%;
+    --accent-foreground: 48 10% 15%;
+    
+    --ring: 48 95% 50%;
+  }
+  
+  [data-theme="yellow"].dark,
+  [data-theme="yellow"][data-kb-theme="dark"] {
+    --background: 45 12% 20%;
+    --foreground: 48 30% 90%;
+    
+    --muted: 48 15% 15%;
+    --muted-foreground: 48 20% 65%;
+    
+    --popover: 45 16% 20%;
+    --popover-foreground: 48 30% 90%;
+    
+    --border: 45 15% 40%;
+    --input: 45 15% 40%;
+    
+    --card: 45 16% 20%;
+    --card-foreground: 48 30% 90%;
+    
+    --primary: 48 95% 50%;
+    --primary-foreground: 48 10% 10%;
+    
+    --secondary: 48 15% 20%;
+    --secondary-foreground: 48 30% 90%;
+    
+    --accent: 48 20% 25%;
+    --accent-foreground: 48 30% 90%;
+    
+    --ring: 48 95% 50%;
+  }
+  
+  [data-theme="red"] {
+    --background: 0 100% 94%;
+    --foreground: 0 10% 10%;
+    
+    --muted: 0 30% 94%;
+    --muted-foreground: 0 10% 40%;
+    
+    --popover: 0 100% 97%;
+    --popover-foreground: 0 10% 10%;
+    
+    --border: 0 60% 85%;
+    --input: 0 30% 90%;
+    
+    --card: 0 100% 97%;
+    --card-foreground: 0 10% 10%;
+    
+    --primary: 0 85% 40%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 0 30% 92%;
+    --secondary-foreground: 0 10% 15%;
+    
+    --accent: 0 50% 90%;
+    --accent-foreground: 0 10% 15%;
+    
+    --ring: 0 85% 40%;
+  }
+  
+  [data-theme="red"].dark,
+  [data-theme="red"][data-kb-theme="dark"] {
+    --background: 0 12% 20%;
+    --foreground: 0 30% 90%;
+    
+    --muted: 0 15% 15%;
+    --muted-foreground: 0 20% 65%;
+    
+    --popover: 0 16% 20%;
+    --popover-foreground: 0 30% 90%;
+    
+    --border: 0 15% 40%;
+    --input: 0 15% 20%;
+    
+    --card: 0 16% 20%;
+    --card-foreground: 0 30% 90%;
+    
+    --primary: 0 85% 45%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 0 15% 20%;
+    --secondary-foreground: 0 30% 90%;
+    
+    --accent: 0 20% 25%;
+    --accent-foreground: 0 30% 90%;
+    
+    --ring: 0 85% 45%;
+  }
+  
+  [data-theme="neutral"] {
+    --background: 240 20% 92%;
+    --foreground: 240 10% 10%;
+    
+    --muted: 240 10% 94%;
+    --muted-foreground: 240 10% 40%;
+    
+    --popover: 240 10% 95%;
+    --popover-foreground: 240 10% 10%;
+    
+    --border: 240 20% 85%;
+    --input: 240 10% 90%;
+    
+    --card: 240 20% 95%;
+    --card-foreground: 240 10% 10%;
+    
+    --primary: 240 50% 40%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 240 10% 92%;
+    --secondary-foreground: 240 10% 15%;
+    
+    --accent: 240 20% 90%;
+    --accent-foreground: 240 10% 15%;
+    
+    --ring: 240 50% 40%;
+  }
+  
+  [data-theme="neutral"].dark,
+  [data-theme="neutral"][data-kb-theme="dark"] {
+    --background: 240 12% 20%;
+    --foreground: 240 30% 90%;
+    
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 10% 65%;
+    
+    --popover: 240 16% 20%;
+    --popover-foreground: 240 30% 90%;
+    
+    --border: 240 10% 40%;
+    --input: 240 10% 20%;
+    
+    --card: 240 16% 20%;
+    --card-foreground: 240 30% 90%;
+    
+    --primary: 240 50% 50%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 240 10% 20%;
+    --secondary-foreground: 240 30% 90%;
+    
+    --accent: 240 15% 25%;
+    --accent-foreground: 240 30% 90%;
+    
+    --ring: 240 50% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+}
+
+@layer utilities {
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+  @apply bg-accent;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
