@@ -8,8 +8,8 @@ export class Book {
     public language: string,
     public finished: boolean,
     public startPage: number,
-    public latestPage: number,
-    public negapages: number,
     public cover: string,
+    public latestPage?: number,
+    public negapages?: number,
   ) {}
 }
