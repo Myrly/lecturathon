@@ -1,22 +1,28 @@
-import { Component, createSignal } from "solid-js";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Component } from "solid-js";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
+import { BookList } from "./BookList";
+import AddBook from "./AddBook";
 
 const Home: Component<{}> = () => {
-  const [count, setCount] = createSignal(0);
-
-  const increment = () => setCount((prev) => prev + 1);
   
   return (
     <>
       <div class="flex items-center justify-center h-100 w-screen">
-        <Card>
-          <CardHeader/>
+        <Card class="max-w-[400px] w-[90%]">
+          <CardHeader>
+            <CardTitle>Vos livres</CardTitle>
+          </CardHeader>
           <CardContent>
-            <div class="flex items-center justify-between mb-4 gap-3">
-              <p class="text-base">Button clicked {count()} times</p>
-              <Button onClick={increment}>Click Me</Button>
-            </div>
+            <Tabs defaultValue="ongoing">
+              <TabsList class="grid w-full grid-cols-2">
+                <TabsTrigger value="ongoing">En cours</TabsTrigger>
+                <TabsTrigger value="finished">Terminés</TabsTrigger>
+              </TabsList>
+              <TabsContent value="ongoing" class="flex justify-center items-center"><BookList isOngoing={true} /></TabsContent>
+              <TabsContent value="finished" class="flex justify-center items-center"><BookList isOngoing={false} /></TabsContent>
+            </Tabs>
+            <AddBook/>
           </CardContent>
         </Card>
       </div>
