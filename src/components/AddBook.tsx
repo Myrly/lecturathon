@@ -8,10 +8,11 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip
 import { isMobile } from "~/lib/utils";
 import { useBooks } from "~/lib/useBooks";
 import { Book } from "~/types/book";
+import { logac } from "~/lib/logger";
 
 const AddBook: Component<{}> = () => {
 
-  const { books, addBook } = useBooks();
+  const { addBook } = useBooks();
   const [cover, setCover] = createSignal<string>("");
   let fileInput: HTMLInputElement | undefined;
 
@@ -65,6 +66,9 @@ const AddBook: Component<{}> = () => {
     );
 
     addBook(newBook);
+    logac("add-book", {
+      book: newBook.id,
+    });
     form.reset();
     setCover("");
   };
