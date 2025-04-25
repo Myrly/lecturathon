@@ -1,11 +1,12 @@
-import { Component  , createSignal, For, onMount, Show } from "solid-js";
+import { Component, createSignal, For, onMount, onCleanup, createEffect } from "solid-js";
 import { useBooks } from "~/lib/useBooks";
 import { Book } from "~/types/book";
 import BookListCard from "./BookListCard";
 
-const BookList: Component<{isOngoing: boolean}> = (props: {isOngoing: boolean}) => {
+const BookList: Component<{showOngoing: boolean}> = (props: {showOngoing: boolean}) => {
   const { books } = useBooks();
   const [maskClass, setMaskClass] = createSignal('scroll-mask-bottom');
+  const [filteredBooks, setFilteredBooks] = createSignal<Book[]>([]);
   let scrollContainerRef: HTMLDivElement | undefined;
   
   const updateScrollMask = () => {
@@ -26,28 +27,33 @@ const BookList: Component<{isOngoing: boolean}> = (props: {isOngoing: boolean}) 
     }
   };
 
+  // Update filtered books whenever the source books change
+  createEffect(() => {
+    const allBooks = books();
+    setFilteredBooks(allBooks.filter(book => book.finished !== props.showOngoing));
+    
+    // Also update the scroll mask when books change
+    setTimeout(updateScrollMask, 0);
+  });
+
   onMount(() => {
     if (scrollContainerRef) {
       scrollContainerRef.addEventListener('scroll', updateScrollMask);
       setTimeout(updateScrollMask, 0);
     }
-    
-    return () => {
-      if (scrollContainerRef) {
-        scrollContainerRef.removeEventListener('scroll', updateScrollMask);
-      }
-    };
+  });
+  
+  onCleanup(() => {
+    if (scrollContainerRef) {
+      scrollContainerRef.removeEventListener('scroll', updateScrollMask);
+    }
   });
   
   return (
     <>
-      <div ref={scrollContainerRef} class={`flex items-center justify-center flex-col w-full overflow-y-scroll scrollbar-hidden ${maskClass()}`}>
-        <For each={books()}>
-          {(book: Book) => (
-            <Show when={book.finished !== props.isOngoing}>
-              <BookListCard book={book} />
-            </Show>
-          )}
+      <div ref={scrollContainerRef} class={`w-full max-h-[45vh] overflow-y-scroll scrollbar-hidden ${maskClass()}`}>
+        <For each={filteredBooks()}>
+          {(book: Book) => <BookListCard book={book} />}
         </For>
       </div>
     </>

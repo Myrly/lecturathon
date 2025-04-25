@@ -6,7 +6,20 @@ import * as TooltipPrimitive from "@kobalte/core/tooltip"
 
 import { cn } from "~/lib/utils"
 
-const TooltipTrigger = TooltipPrimitive.Trigger
+// Create a custom TooltipTrigger that prevents default events
+const TooltipTrigger = (props: any) => {
+  const handleClick = (e: MouseEvent) => {
+    // Stop event propagation to prevent form submission
+    e.stopPropagation();
+    
+    // Call the original onClick handler if it exists
+    if (props.onClick) {
+      props.onClick(e);
+    }
+  };
+  
+  return <TooltipPrimitive.Trigger {...props} onClick={handleClick} />;
+};
 
 const Tooltip: Component<TooltipPrimitive.TooltipRootProps> = (props) => {
   return <TooltipPrimitive.Root gutter={4} {...props} />

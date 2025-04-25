@@ -1,4 +1,4 @@
-import { Component, createSignal, JSX } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog"
 import { Button } from "./ui/button";
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field";
@@ -14,7 +14,9 @@ const AddBook: Component<{}> = () => {
 
   const { addBook } = useBooks();
   const [cover, setCover] = createSignal<string>("");
+  const [isOpen, setIsOpen] = createSignal(false);
   let fileInput: HTMLInputElement | undefined;
+  let formRef: HTMLFormElement | undefined;
 
   const getAuthorsPlaceholder = () => {
     let placeholderText: string = "Amy Santiago, ";
@@ -43,19 +45,26 @@ const AddBook: Component<{}> = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit: JSX.EventHandler<HTMLFormElement, Event> = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const title = (data.get("title") as string).trim();
-    const authors = (data.get("authors") as string).split(",").map(a => a.trim()).filter(Boolean);
-    const genres = (data.get("genres") as string).split(",").map(g => g.trim()).filter(Boolean);
-    const tags = (data.get("tags") as string).split(",").map(t => t.trim()).filter(Boolean);
-    const startPage = parseInt(data.get("startPage") as string, 10);
+  const resetForm = () => {
+    if (formRef) {
+      formRef.reset();
+      setCover("");
+    }
+  };
+
+  const submitForm = (closeAfterSubmit: boolean) => {
+    if (!formRef) return;
+    
+    const data = new FormData(formRef);
+    const title = (data.get("title") as string)?.trim();
+    const authors = (data.get("authors") as string)?.split(",").map(a => a.trim()).filter(Boolean) || [];
+    const genres = (data.get("genres") as string)?.split(",").map(g => g.trim()).filter(Boolean) || [];
+    const tags = (data.get("tags") as string)?.split(",").map(t => t.trim()).filter(Boolean) || [];
+    const startPage = parseInt(data.get("startPage") as string, 10) || 1;
 
     const newBook = new Book(
       Date.now(),
-      title,
+      title || "Sans titre",
       authors,
       genres,
       tags,
@@ -69,15 +78,23 @@ const AddBook: Component<{}> = () => {
     logac("add-book", {
       book: newBook.id,
     });
-    form.reset();
-    setCover("");
+    resetForm();
+
+    if (closeAfterSubmit) {
+      setIsOpen(false);
+    }
+  };
+
+  const handleTooltipClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen()} onOpenChange={setIsOpen}>
       <DialogTrigger as={Button<"button">}>Ajouter un livre</DialogTrigger>
       <DialogContent class="max-w-[500px] w-[90%]">
-        <form onSubmit={handleSubmit}>
+        <form ref={formRef}>
         <DialogHeader>
           <DialogTitle>Nouveau livre</DialogTitle>
           <DialogDescription>
@@ -94,7 +111,7 @@ const AddBook: Component<{}> = () => {
               <NumberFieldLabel for="startPage" class="flex items-center gap-0.5">
                 Première page*
                 <Tooltip>
-                  <TooltipTrigger><HiOutlineQuestionMarkCircle class="ml-1 text-muted-foreground" size={16} /></TooltipTrigger>
+                  <TooltipTrigger onClick={handleTooltipClick}><HiOutlineQuestionMarkCircle class="ml-1 text-muted-foreground" size={16} /></TooltipTrigger>
                   <TooltipContent class="text-wrap max-w-80">Le numéro de la première page de texte que vous <b>lirez</b> durant le marathon.</TooltipContent>
                 </Tooltip>
               </NumberFieldLabel>
@@ -114,7 +131,7 @@ const AddBook: Component<{}> = () => {
                   ref={el => (fileInput = el)}
                   onChange={handleFileChange}
                 />
-              <Button variant="outline" class="w-full mt-1" onClick={() => fileInput?.click()}>
+              <Button type="button" variant="outline" class="w-full mt-1" onClick={() => fileInput?.click()}>
                 {
                   cover() && cover() != "" ? 
                   <HiOutlineCheck class="mt-0.5" size={16} /> :
@@ -148,7 +165,10 @@ const AddBook: Component<{}> = () => {
           </TextField>
         </div>
         <DialogFooter>
-          <Button type="submit">Ajouter le livre</Button>
+          <div class="w-full grid grid-cols-2 gap-2">
+            <Button type="button" onClick={() => submitForm(true)} class="w-full">Ajouter et fermer</Button>
+            <Button type="button" variant="outline" onClick={() => submitForm(false)} class="w-full">Ajouter et continuer</Button>
+          </div>
         </DialogFooter>
         </form>
       </DialogContent>

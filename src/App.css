@@ -139,7 +139,7 @@
     --card: 45 16% 20%;
     --card-foreground: 48 30% 90%;
     
-    --primary: 48 95% 50%;
+    --primary: 48 90% 60%;
     --primary-foreground: 48 10% 10%;
     
     --secondary: 48 15% 20%;
@@ -314,8 +314,8 @@
 .scrollbar-hidden {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
-  overscroll-behavior: none;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;             /* Chrome, Safari and Opera */
 }

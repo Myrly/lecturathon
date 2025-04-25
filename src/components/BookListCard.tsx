@@ -1,7 +1,8 @@
 import { Component, For } from "solid-js";
 import { Book } from "~/types/book";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+import { A } from "@solidjs/router";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const BookListCard: Component<{book: Book}> = (props: {book: Book}) => {
   
@@ -13,19 +14,24 @@ const BookListCard: Component<{book: Book}> = (props: {book: Book}) => {
       </div>
       
       {/* Book details with flex-grow */}
-      <div class="flex-grow overflow-hidden px-2">
-        <div class="flex flex-col max-w-full">
-          <h3 class="text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis" 
-              title={props.book.title}>
-            {props.book.title}
-          </h3>
+      <div class="flex-grow overflow-hidden px-2 mt-2">
+        <div class="flex flex-col justify-end max-w-full">
+          <Tooltip>
+            <TooltipTrigger>
+              <h3 class="text-[0.9em] text-start font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
+                {props.book.title}
+              </h3>
+            </TooltipTrigger>
+            <TooltipContent>{props.book.title}</TooltipContent>
+          </Tooltip>
+          
           
           {/* Authors badges with horizontal scroll */}
           <div class="flex max-w-full relative">
-            <div class="flex gap-2 mt-1 overflow-x-auto scrollbar-hidden pb-1 max-w-full">
+            <div class="flex gap-1 mt-0.5 overflow-x-auto scrollbar-hidden pb-1 max-w-full">
               <For each={props.book.authors || []}>
                 {(item) => (
-                  <p class="text-xs bg-secondary text-secondary-foreground/75 border px-0.5 py-0.25 rounded-md whitespace-nowrap">{item}</p>
+                  <p class="text-[10px] bg-secondary text-secondary-foreground/75 border px-0.5 rounded-md whitespace-nowrap">{item}</p>
                 )}
               </For>
             </div>
@@ -33,10 +39,10 @@ const BookListCard: Component<{book: Book}> = (props: {book: Book}) => {
           
           {/* Genres badges with horizontal scroll */}
           <div class="flex max-w-full relative">
-            <div class="flex gap-2 mt-1 overflow-x-auto scrollbar-hidden pb-1 max-w-full">
+            <div class="flex gap-1 overflow-x-auto scrollbar-hidden pb-1 max-w-full">
               <For each={props.book.genres || []}>
                 {(item) => (
-                  <p class="text-xs text-muted-foreground border px-0.5 py-0.25 rounded-md whitespace-nowrap">{item}</p>
+                  <p class="text-[10px] text-muted-foreground border px-0.5 py-0.25 rounded-md whitespace-nowrap">{item}</p>
                 )}
               </For>
             </div>
@@ -46,7 +52,7 @@ const BookListCard: Component<{book: Book}> = (props: {book: Book}) => {
       
       {/* Read button with fixed width */}
       <div class="flex-shrink-0 pr-3">
-        <Button size="sm">Lire</Button>
+        <Button as={A} href={`/read/${props.book.id}`} size="sm">Lire</Button>
       </div>
     </div>
   );
