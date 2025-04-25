@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { BookList } from "./BookList";
 import AddBook from "./AddBook";
@@ -9,7 +9,7 @@ const Home: Component<{}> = () => {
   return (
     <>
       <div class="flex items-center justify-center h-100 w-screen">
-        <Card class="max-w-[400px] w-[90%]">
+        <Card class="max-w-[400px] w-[90%] max-h-[70vh] overflow-hidden">
           <CardHeader>
             <CardTitle>Vos livres</CardTitle>
           </CardHeader>
@@ -21,9 +21,11 @@ const Home: Component<{}> = () => {
               </TabsList>
               <TabsContent value="ongoing" class="flex justify-center items-center"><BookList isOngoing={true} /></TabsContent>
               <TabsContent value="finished" class="flex justify-center items-center"><BookList isOngoing={false} /></TabsContent>
-            </Tabs>
-            <AddBook/>
+            </Tabs>            
           </CardContent>
+          <CardFooter class="flex justify-center items-center">
+            <AddBook />
+          </CardFooter>
         </Card>
       </div>
     </>

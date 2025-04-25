@@ -310,3 +310,32 @@
 ::-webkit-scrollbar-corner {
   display: none;
 }
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+  overscroll-behavior: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari and Opera */
+}
+
+.scroll-mask-both {
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.scroll-mask-top {
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 100%);
+}
+
+.scroll-mask-bottom {
+  mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent);
+}
+
+.scroll-mask-none {
+  mask-image: none;
+  -webkit-mask-image: none;
+}
