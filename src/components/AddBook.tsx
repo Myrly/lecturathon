@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from "./ui/button";
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field";
 import { NumberField, NumberFieldDecrementTrigger, NumberFieldGroup, NumberFieldIncrementTrigger, NumberFieldInput, NumberFieldLabel } from "~/components/ui/number-field";
-import { HiOutlineArrowUpTray, HiOutlineQuestionMarkCircle } from "solid-icons/hi";
+import { HiOutlineArrowUpTray, HiOutlineCheck, HiOutlineQuestionMarkCircle } from "solid-icons/hi";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip"
 import { isMobile } from "~/lib/utils";
 import { useBooks } from "~/lib/useBooks";
@@ -85,24 +85,9 @@ const AddBook: Component<{}> = () => {
           </DialogDescription>
         </DialogHeader>
         <div class="grid gap-4 py-4">
-          <TextField class="grid w-full max-w-sm items-center gap-1.5" required>
+          <TextField class="grid w-full items-center gap-1.5" required>
             <TextFieldLabel for="title">Titre*</TextFieldLabel>
             <TextFieldInput type="text" id="title" name="title" placeholder="Les Carnets de Nostradamus" />
-          </TextField>
-          <TextField class="grid w-full max-w-sm items-center gap-1.5">
-            <TextFieldLabel for="authors">Auteur(s)</TextFieldLabel>
-            <p id="authors-help" class="text-sm text-muted-foreground">Séparez les auteurs par une virgule</p>
-            <TextFieldInput type="text" id="authors" name="authors" placeholder={getAuthorsPlaceholder()} aria-describedby="authors-help" />
-          </TextField>
-          <TextField class="grid w-full max-w-sm items-center gap-1.5">
-            <TextFieldLabel for="genres">Genre(s)</TextFieldLabel>
-            <p id="genres-help" class="text-sm text-muted-foreground">Séparez les genres par une virgule</p>
-            <TextFieldInput type="text" id="genres" name="genres" placeholder="Fantasy, Horreur" aria-describedby="genres-help" />
-          </TextField>
-          <TextField class="grid w-full max-w-sm items-center gap-1.5">
-            <TextFieldLabel for="tags">Tag(s)</TextFieldLabel>
-            <p id="tags-help" class="text-sm text-muted-foreground">Séparez les tags par une virgule</p>
-            <TextFieldInput type="text" id="tags" name="tags" placeholder="Lovers to enemies, confiture, emprunté, tranchefil" aria-describedby="tags-help" />
           </TextField>
           <div class="grid gap-4 w-full items-center" classList={{ "grid-cols-2": isMobile(), "grid-cols-5": !isMobile() }}>
             <NumberField class="w-full grid items-start gap-1.5" classList={{ "col-span-2": !isMobile()}} required>
@@ -110,7 +95,7 @@ const AddBook: Component<{}> = () => {
                 Première page*
                 <Tooltip>
                   <TooltipTrigger><HiOutlineQuestionMarkCircle class="ml-1 text-muted-foreground" size={16} /></TooltipTrigger>
-                  <TooltipContent>Le numéro de la première page de texte que vous <b>lirez</b> durant le marathon.</TooltipContent>
+                  <TooltipContent class="text-wrap max-w-80">Le numéro de la première page de texte que vous <b>lirez</b> durant le marathon.</TooltipContent>
                 </Tooltip>
               </NumberFieldLabel>
               <NumberFieldGroup>
@@ -130,11 +115,37 @@ const AddBook: Component<{}> = () => {
                   onChange={handleFileChange}
                 />
               <Button variant="outline" class="w-full mt-1" onClick={() => fileInput?.click()}>
-                <HiOutlineArrowUpTray class="mr-1" size={16} />
-                {isMobile() ? 'Image' : 'Choisir une image'}
+                {
+                  cover() && cover() != "" ? 
+                  <HiOutlineCheck class="mt-0.5" size={16} /> :
+                  <HiOutlineArrowUpTray class="mt-0.5" size={16} />
+                }
+                {
+                isMobile() 
+                ? cover() && cover() != "" 
+                  ? 'Chargée' 
+                  : 'Choisir'
+                : cover() && cover() != "" 
+                  ? 'Image chargée' 
+                  : 'Choisir une image'}
               </Button>
             </TextField>
           </div>
+          <TextField class="grid w-full items-center gap-1.5">
+            <TextFieldLabel for="authors">Auteur(s)</TextFieldLabel>
+            <p id="authors-help" class="text-sm text-muted-foreground">Séparez les auteurs par une virgule</p>
+            <TextFieldInput type="text" id="authors" name="authors" placeholder={getAuthorsPlaceholder()} aria-describedby="authors-help" />
+          </TextField>
+          <TextField class="grid w-full items-center gap-1.5">
+            <TextFieldLabel for="genres">Genre(s)</TextFieldLabel>
+            <p id="genres-help" class="text-sm text-muted-foreground">Séparez les genres par une virgule</p>
+            <TextFieldInput type="text" id="genres" name="genres" placeholder="Fantasy, Horreur" aria-describedby="genres-help" />
+          </TextField>
+          <TextField class="grid w-full items-center gap-1.5">
+            <TextFieldLabel for="tags">Tag(s)</TextFieldLabel>
+            <p id="tags-help" class="text-sm text-muted-foreground">Séparez les tags par une virgule</p>
+            <TextFieldInput type="text" id="tags" name="tags" placeholder="Lovers to enemies, confiture, emprunté, tranchefil" aria-describedby="tags-help" />
+          </TextField>
         </div>
         <DialogFooter>
           <Button type="submit">Ajouter le livre</Button>
