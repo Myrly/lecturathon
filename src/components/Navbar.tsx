@@ -9,7 +9,7 @@ const Navbar: Component<{}> = () => {
     <>
       <nav class="flex items-center justify-between">
         <div>
-          <Timer endTime={new Date(2025, 4, 25, 17, 10, 0)} />
+          <Timer endTime={new Date(2025, 4, 26, 17, 10, 0)} />
         </div>
         <div class="flex items-center justify-end">
           <ThemeSwitch />

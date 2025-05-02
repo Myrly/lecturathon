@@ -10,15 +10,9 @@ const Timer: Component<{endTime: Date}> = (props: {endTime: Date}) => {
   const [timeLeft, setTimeLeft] = createSignal({ hours: 0, minutes: 0 });
 
   const calculateTimeLeft = () => {
-    const now = new Date();
+    const now = new Date(); 
     
-    const todayEndTime = new Date(now);
-    todayEndTime.setHours(props.endTime.getHours());
-    todayEndTime.setMinutes(props.endTime.getMinutes());
-    todayEndTime.setSeconds(0);
-    todayEndTime.setMilliseconds(0);
-    
-    const difference = todayEndTime.getTime() - now.getTime();
+    const difference = now.getTime() - props.endTime.getTime();
     
     if (difference <= 0) {
       return { hours: 0, minutes: 0 };
